@@ -150,21 +150,9 @@ export default function ChatInterface({ name, profileData, initialMessage, onCom
           zIndex: 10,
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '10px',
-          }}
-        >
+        <div style={{ marginBottom: '10px' }}>
           <span style={{ fontWeight: '600', fontSize: '15px' }}>
             Finding your business, {name}
-          </span>
-          <span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-            {questionCount < QUESTION_ESTIMATES.min
-              ? `~${QUESTION_ESTIMATES.min - questionCount} more questions`
-              : 'Almost done'}
           </span>
         </div>
         {/* Progress bar */}

@@ -145,13 +145,14 @@ export default function Recommendations({ name, recommendations, messages, onRes
         </div>
 
         {/* Recommendations */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', marginBottom: '40px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', marginBottom: '48px' }}>
           {recommendations.map((rec, i) => (
             <div
               key={i}
               style={{
                 background: 'var(--bg-card)',
                 border: '1px solid var(--border)',
+                borderLeft: '3px solid var(--accent)',
                 borderRadius: 'var(--radius)',
                 overflow: 'hidden',
               }}
@@ -159,19 +160,20 @@ export default function Recommendations({ name, recommendations, messages, onRes
               {/* Card header */}
               <div
                 style={{
-                  padding: '20px 24px 16px',
+                  padding: '22px 28px 18px',
                   borderBottom: '1px solid var(--border)',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '12px',
+                  gap: '14px',
+                  background: 'var(--accent-dim)',
                 }}
               >
                 <div
                   style={{
-                    width: '28px',
-                    height: '28px',
+                    width: '30px',
+                    height: '30px',
                     borderRadius: '8px',
-                    background: 'var(--accent-dim)',
+                    background: 'var(--bg)',
                     border: '1px solid var(--accent)',
                     display: 'flex',
                     alignItems: 'center',
@@ -184,69 +186,73 @@ export default function Recommendations({ name, recommendations, messages, onRes
                 >
                   {i + 1}
                 </div>
-                <h2 style={{ fontSize: '17px', fontWeight: '700', margin: 0 }}>{rec.title}</h2>
+                <h2 style={{ fontSize: '18px', fontWeight: '700', margin: 0, letterSpacing: '-0.3px' }}>{rec.title}</h2>
               </div>
 
               {/* Card body */}
-              <div style={{ padding: '20px 24px' }}>
-                <div style={{ marginBottom: '20px' }}>
+              <div style={{ padding: '24px 28px' }}>
+                {/* Why section */}
+                <div style={{ marginBottom: '24px' }}>
                   <div
                     style={{
                       fontSize: '11px',
                       fontWeight: '700',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.8px',
+                      letterSpacing: '1px',
                       color: 'var(--accent)',
-                      marginBottom: '8px',
+                      marginBottom: '10px',
                     }}
                   >
                     Why this for you
                   </div>
-                  <p style={{ fontSize: '14px', lineHeight: '1.7', color: 'var(--text)', margin: 0 }}>
+                  <p style={{ fontSize: '14px', lineHeight: '1.75', color: 'var(--text)', margin: 0 }}>
                     {rec.why}
                   </p>
                 </div>
 
+                {/* Divider */}
+                <div style={{ height: '1px', background: 'var(--border)', marginBottom: '24px' }} />
+
+                {/* First steps section */}
                 <div>
                   <div
                     style={{
                       fontSize: '11px',
                       fontWeight: '700',
                       textTransform: 'uppercase',
-                      letterSpacing: '0.8px',
+                      letterSpacing: '1px',
                       color: 'var(--text-muted)',
-                      marginBottom: '10px',
+                      marginBottom: '14px',
                     }}
                   >
                     First steps
                   </div>
-                  <ol style={{ margin: 0, padding: 0, listStyle: 'none' }}>
+                  <ol style={{ margin: 0, padding: 0, listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {rec.steps.map((step, si) => (
                       <li
                         key={si}
                         style={{
                           display: 'flex',
-                          gap: '10px',
-                          marginBottom: '8px',
+                          gap: '12px',
                           fontSize: '14px',
-                          lineHeight: '1.6',
+                          lineHeight: '1.65',
                         }}
                       >
                         <span
                           style={{
                             flexShrink: 0,
-                            width: '20px',
-                            height: '20px',
+                            width: '22px',
+                            height: '22px',
                             borderRadius: '50%',
-                            background: 'var(--bg)',
-                            border: '1px solid var(--border)',
+                            background: 'var(--accent-dim)',
+                            border: '1px solid var(--accent)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontSize: '11px',
-                            fontWeight: '600',
-                            color: 'var(--text-muted)',
-                            marginTop: '2px',
+                            fontWeight: '700',
+                            color: 'var(--accent)',
+                            marginTop: '1px',
                           }}
                         >
                           {si + 1}
@@ -274,21 +280,32 @@ export default function Recommendations({ name, recommendations, messages, onRes
             onClick={downloadPDF}
             disabled={pdfGenerating}
             style={{
-              padding: '13px 24px',
-              background: 'var(--accent)',
-              color: '#fff',
+              padding: '16px 24px',
+              background: pdfGenerating ? 'var(--border)' : 'var(--accent)',
+              color: pdfGenerating ? 'var(--text-muted)' : '#fff',
               border: 'none',
               borderRadius: 'var(--radius-sm)',
-              fontSize: '15px',
-              fontWeight: '600',
+              fontSize: '16px',
+              fontWeight: '700',
               cursor: pdfGenerating ? 'wait' : 'pointer',
-              opacity: pdfGenerating ? 0.7 : 1,
               transition: 'background 0.2s',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              letterSpacing: '-0.2px',
             }}
-            onMouseEnter={(e) => { if (!pdfGenerating) e.target.style.background = 'var(--accent-hover)' }}
-            onMouseLeave={(e) => { if (!pdfGenerating) e.target.style.background = 'var(--accent)' }}
+            onMouseEnter={(e) => { if (!pdfGenerating) e.currentTarget.style.background = 'var(--accent-hover)' }}
+            onMouseLeave={(e) => { if (!pdfGenerating) e.currentTarget.style.background = 'var(--accent)' }}
           >
-            {pdfGenerating ? 'Generating PDF...' : '↓ Download as PDF'}
+            {pdfGenerating ? (
+              'Generating PDF...'
+            ) : (
+              <>
+                <span style={{ fontSize: '18px', lineHeight: 1 }}>↓</span>
+                Download recommendations as PDF
+              </>
+            )}
           </button>
 
           <button
